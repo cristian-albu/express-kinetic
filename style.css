@@ -169,19 +169,29 @@ h3 {
     outline: 2px solid green;
 }
 
-@media (max-width: 900px) {
-    .t-container {
-        justify-content: center;
-    }
-    .t-card {
-        width: 90%;
-    }
-}
-
 #servicii {
     background-color: rgb(194, 194, 194);
 }
 
 #contact {
     background-color: white;
+}
+
+@media (max-width: 900px) {
+    h2 {
+        font-size: 1.8rem;
+        padding: 1rem 0px;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+        padding: 1rem 0px;
+    }
+
+    .t-container {
+        justify-content: center;
+    }
+    .t-card {
+        width: 90%;
+    }
 }

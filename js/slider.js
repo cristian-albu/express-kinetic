@@ -1,3 +1,7 @@
+/**
+ * Builds a container for the left and right arrow buttons
+ * @param {HTMLDivElement} sliderContainer - The container of the testimonials
+ */
 function buildBtnContainer(sliderContainer) {
     const sliderBtnContainer = document.createElement("div");
     const sliderBtnLeft = document.createElement("button");
@@ -13,6 +17,10 @@ function buildBtnContainer(sliderContainer) {
     return { sliderBtnLeft, sliderBtnRight };
 }
 
+/**
+ * Apply the styles for each slide, including the ones that may appear on the next left or right click.
+ * @param {HTMLDivElement[]} list - The list of slides (testimonials)
+ */
 function applyStyles(list) {
     for (let i = 0; i < list.length; i++) {
         let left = "";
@@ -49,6 +57,11 @@ function applyStyles(list) {
     }
 }
 
+/**
+ * Gets the existing slides as nodes, process them to be in a array of elements. Also handles edge cases for between 2 and 5 slides.
+ * @param {HTMLDivElement} sliderContainer - The container of the testimonials
+ * @returns {HTMLDivElement[]}
+ */
 function getSliders(sliderContainer) {
     const sliderCards = [];
     document.querySelectorAll(".t-card").forEach((e) => sliderCards.push(e));
@@ -68,32 +81,63 @@ function getSliders(sliderContainer) {
     return sliderCards;
 }
 
+/**
+ * Pops the last element of the list and inserts it at the beginning and then reapplies the styles
+ * @param {HTMLDivElement[]} sliderCards - An array of testimonials
+ */
 function handleLeftClick(sliderCards) {
     sliderCards.unshift(sliderCards.pop());
     applyStyles(sliderCards);
 }
 
+/**
+ * Shifts the last element of the list and inserts it at the end and then reapplies the styles
+ * @param {HTMLDivElement[]} sliderCards - An array of testimonials
+ */
 function handleRightclick(sliderCards) {
     sliderCards.push(sliderCards.shift());
     applyStyles(sliderCards);
 }
 
-function handleKeyDown(event) {
+/**
+ * Handles the arrow left and arrow right for the slider
+ * @param {KeyboardEvent} event - The native keydown event
+ * @param {HTMLDivElement[]} sliderCards - An array of testimonials
+ */
+function handleKeyDown(event, sliderCards) {
     if (event.key === "ArrowLeft") {
-        handleLeftClick();
+        handleLeftClick(sliderCards);
     }
 
     if (event.key === "ArrowRight") {
-        handleRightclick();
+        handleRightclick(sliderCards);
     }
 }
 
-const keyDownListenerCallback = (entries) => {
-    if (entries[0].isIntersecting) {
-        document.addEventListener("keydown", handleKeyDown);
-    } else {
-        document.removeEventListener("keydown", handleKeyDown);
-    }
+/**
+ * Wraps the Intersaction observer in order to provide a block context with sliderCards it
+ * @param {HTMLDivElement} container - The container of the testimonials
+ * @param {HTMLDivElement[]} sliderCards - An array of testimonials
+ */
+const observerWrapper = (container, sliderCards) => {
+    /**
+     * Add and remove keydown event listeners while the sliderContainer is in view
+     * @param {*} entries - Observer entries
+     */
+    const keyDownListenerCallback = (entries) => {
+        if (entries[0].isIntersecting) {
+            document.addEventListener("keydown", function (event) {
+                handleKeyDown(event, sliderCards);
+            });
+        } else {
+            document.removeEventListener("keydown", function (event) {
+                handleKeyDown(event, sliderCards);
+            });
+        }
+    };
+
+    const observer = new IntersectionObserver(keyDownListenerCallback);
+    observer.observe(container);
 };
 
 if (window.innerWidth > 900) {
@@ -108,6 +152,5 @@ if (window.innerWidth > 900) {
         handleRightclick(sliderCards);
     });
 
-    const observer = new IntersectionObserver(keyDownListenerCallback, { rootMargin: "0px", threshold: 1.0 });
-    observer.observe(sliderContainer);
+    observerWrapper(sliderContainer, sliderCards);
 }
