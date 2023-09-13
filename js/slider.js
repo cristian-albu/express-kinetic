@@ -1,27 +1,40 @@
 /**
+ * Build a testimonial button
+ * @param {string} text
+ * @param {string} ariaLabel
+ * @returns {HTMLButtonElement}
+ */
+const createButton = (text, ariaLabel) => {
+    const button = document.createElement("button");
+    button.ariaLabel = ariaLabel;
+    button.innerText = text;
+    button.classList.add("t-btn");
+    return button;
+};
+
+/**
  * Builds a container for the left and right arrow buttons
  * @param {HTMLDivElement} sliderContainer - The container of the testimonials
  */
-function buildBtnContainer(sliderContainer) {
+const buildBtnContainer = (sliderContainer) => {
     const sliderBtnContainer = document.createElement("div");
-    const sliderBtnLeft = document.createElement("button");
-    const sliderBtnRight = document.createElement("button");
     sliderBtnContainer.classList.add("t-btn-container");
-    sliderBtnLeft.innerText = "<";
-    sliderBtnRight.innerText = ">";
-    sliderBtnLeft.classList.add("t-btn");
-    sliderBtnRight.classList.add("t-btn");
+
+    const sliderBtnLeft = createButton("<", "Vezi testimonialul din stânga");
+    const sliderBtnRight = createButton(">", "Vezi testimonialul din dreapta");
+
     sliderBtnContainer.appendChild(sliderBtnLeft);
     sliderBtnContainer.appendChild(sliderBtnRight);
     sliderContainer.appendChild(sliderBtnContainer);
+
     return { sliderBtnLeft, sliderBtnRight };
-}
+};
 
 /**
  * Apply the styles for each slide, including the ones that may appear on the next left or right click.
  * @param {HTMLDivElement[]} list - The list of slides (testimonials)
  */
-function applyStyles(list) {
+const applyStyles = (list) => {
     for (let i = 0; i < list.length; i++) {
         let left = "";
         let scale = "1";
@@ -38,7 +51,7 @@ function applyStyles(list) {
         } else if (i === 2) {
             left = "35%";
             scale = "1.2";
-            zIndex = "3";
+            zIndex = "5";
             opacity = "1";
         } else if (i === 3) {
             left = "70%";
@@ -55,17 +68,18 @@ function applyStyles(list) {
         list[i].style.zIndex = zIndex;
         list[i].style.opacity = opacity;
     }
-}
+};
 
 /**
  * Gets the existing slides as nodes, process them to be in a array of elements. Also handles edge cases for between 2 and 5 slides.
  * @param {HTMLDivElement} sliderContainer - The container of the testimonials
  * @returns {HTMLDivElement[]}
  */
-function getSliders(sliderContainer) {
-    const sliderCards = [];
-    document.querySelectorAll(".t-card").forEach((e) => sliderCards.push(e));
+const getSliders = (sliderContainer) => {
+    const sliderCards = Array.from(document.querySelectorAll(".t-card"));
     const sliderCardsLength = sliderCards.length;
+
+    // Handle edge cases so the animation is smooth by appending duplicate slides at each end of the array
     if (sliderCardsLength > 2 && sliderCardsLength < 5) {
         for (let i = 0; i < sliderCardsLength - 1; i++) {
             const postSlide = sliderCards[i].cloneNode(true);
@@ -79,40 +93,35 @@ function getSliders(sliderContainer) {
 
     applyStyles(sliderCards);
     return sliderCards;
-}
+};
 
 /**
  * Pops the last element of the list and inserts it at the beginning and then reapplies the styles
  * @param {HTMLDivElement[]} sliderCards - An array of testimonials
  */
-function handleLeftClick(sliderCards) {
+const handleLeftClick = (sliderCards) => {
     sliderCards.unshift(sliderCards.pop());
     applyStyles(sliderCards);
-}
+};
 
 /**
  * Shifts the last element of the list and inserts it at the end and then reapplies the styles
  * @param {HTMLDivElement[]} sliderCards - An array of testimonials
  */
-function handleRightclick(sliderCards) {
+const handleRightClick = (sliderCards) => {
     sliderCards.push(sliderCards.shift());
     applyStyles(sliderCards);
-}
+};
 
 /**
  * Handles the arrow left and arrow right for the slider
  * @param {KeyboardEvent} event - The native keydown event
  * @param {HTMLDivElement[]} sliderCards - An array of testimonials
  */
-function handleKeyDown(event, sliderCards) {
-    if (event.key === "ArrowLeft") {
-        handleLeftClick(sliderCards);
-    }
-
-    if (event.key === "ArrowRight") {
-        handleRightclick(sliderCards);
-    }
-}
+const handleKeyDown = (event, sliderCards) => {
+    if (event.key === "ArrowLeft") handleLeftClick(sliderCards);
+    if (event.key === "ArrowRight") handleRightClick(sliderCards);
+};
 
 /**
  * Wraps the Intersaction observer in order to provide a block context with sliderCards it
@@ -140,17 +149,14 @@ const observerWrapper = (container, sliderCards) => {
     observer.observe(container);
 };
 
+// Make slider only for desktop
 if (window.innerWidth > 900) {
     const sliderContainer = document.querySelector(".t-container");
-    const sliderCards = getSliders(sliderContainer);
-    const { sliderBtnLeft, sliderBtnRight } = buildBtnContainer(sliderContainer);
-
-    sliderBtnLeft.addEventListener("click", function () {
-        handleLeftClick(sliderCards);
-    });
-    sliderBtnRight.addEventListener("click", function () {
-        handleRightclick(sliderCards);
-    });
-
-    observerWrapper(sliderContainer, sliderCards);
+    if (sliderContainer.querySelectorAll(".t-card").length >= 3) {
+        const sliderCards = getSliders(sliderContainer);
+        const { sliderBtnLeft, sliderBtnRight } = buildBtnContainer(sliderContainer);
+        sliderBtnLeft.addEventListener("click", () => handleLeftClick(sliderCards));
+        sliderBtnRight.addEventListener("click", () => handleRightClick(sliderCards));
+        observerWrapper(sliderContainer, sliderCards);
+    }
 }
