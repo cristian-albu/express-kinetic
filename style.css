@@ -168,16 +168,28 @@ p {
     border-bottom: 2px solid white;
     border-left: var(--yellow);
 }
+
+@media (max-width: 900px) {
+    .services-desc {
+        width: 100%;
+    }
+    .services-card-container {
+        width: 100%;
+    }
+}
+
 /* ------------- TESTIMONIALE 📃 -------------- */
 
 #testimoniale {
     background-color: var(--yellow);
+    background-image: url("/assets/dots.svg");
     position: relative;
     padding-top: 5rem;
     padding-bottom: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
 }
 
 #t-cont {
