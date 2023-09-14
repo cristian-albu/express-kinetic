@@ -1,5 +1,14 @@
+:root {
+    --yellow: #f9e7d6;
+    --red: #f88867;
+    --pink: #fbbcb2;
+    --blue: #cce5f0;
+    --dark: #343434;
+}
+
 html {
     box-sizing: border-box;
+    color: var(--dark);
 }
 *,
 *:before,
@@ -55,8 +64,14 @@ section {
 
 body {
     font-family: "Merriweather", serif;
-    font-size: 12px;
-    line-height: 160%;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+h1 {
+    font-size: 3rem;
+    padding: 1rem 0px;
+    line-height: 1.2;
 }
 
 h2 {
@@ -69,18 +84,94 @@ h3 {
     padding: 1rem 0px;
 }
 
+p {
+    padding-bottom: 1rem;
+}
+
 #nav {
     background-color: black;
     color: white;
 }
+
+/* ------------- ACASA 📃 -------------- */
+
 #acasa {
+    width: 100%;
     min-height: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10%;
 }
 
+.landing-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-right {
+    width: 50%;
+}
+
+/* ------------- SERVICII 📃 -------------- */
+
+#servicii {
+    width: 100%;
+    padding: 5rem 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--blue);
+    background-image: url("/assets/clouds.svg");
+    background-size: 150%;
+    position: relative;
+}
+
+.services-desc {
+    width: 40%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: 1rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.services-card-container {
+    width: 60%;
+}
+
+.service-card {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 15px 15px 35px 5px rgba(38, 60, 111, 0.2);
+    margin-bottom: 2rem;
+    background-color: white;
+    border: 1px solid;
+    border-top: 2px solid white;
+    border-right: 2px solid var(--yellow);
+    border-bottom: 2px solid white;
+    border-left: var(--yellow);
+}
 /* ------------- TESTIMONIALE 📃 -------------- */
 
 #testimoniale {
-    background-color: rgb(245, 245, 245);
+    background-color: var(--yellow);
     position: relative;
     padding-top: 5rem;
     padding-bottom: 3rem;
@@ -89,13 +180,13 @@ h3 {
     align-items: center;
 }
 
-#testimoniale h2 {
-    margin-bottom: 2rem;
+#t-cont {
+    overflow: hidden;
+    padding-top: 2rem;
 }
 
 .t-container {
     position: relative;
-    overflow: hidden;
     width: 100%;
     max-width: 100%;
     margin-left: auto;
@@ -105,14 +196,14 @@ h3 {
     flex-wrap: wrap;
     gap: 2.5rem;
     padding: 4rem 0px;
-    min-height: 30rem;
+    min-height: 42rem;
 }
 
 .t-card {
     position: relative;
     width: 30%;
     height: 80%;
-    background-image: linear-gradient(to bottom, white, white, rgba(255, 255, 255, 0));
+    background-image: linear-gradient(to bottom, white, white, white, rgba(255, 255, 255, 0));
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -121,6 +212,18 @@ h3 {
     top: 10%;
     padding: 2rem;
     transition: left 200ms, scale 200ms;
+}
+
+.t-card::after {
+    content: "";
+    position: absolute;
+    right: -10%;
+    top: -5%;
+    width: 25%;
+    height: 15%;
+    background-image: url("/assets/sunflower.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .t-card.t-card-js {
@@ -139,10 +242,12 @@ h3 {
     z-index: 5;
     background-image: linear-gradient(
         to right,
-        rgb(245, 245, 245),
+        var(--yellow),
         rgba(255, 255, 255, 0),
         rgba(255, 255, 255, 0),
-        rgb(245, 245, 245)
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0),
+        var(--yellow)
     );
 }
 
@@ -167,10 +272,6 @@ h3 {
     background-color: white;
     box-shadow: 0px 15px 15px 5px rgba(0, 0, 0, 0.2);
     outline: 2px solid green;
-}
-
-#servicii {
-    background-color: rgb(194, 194, 194);
 }
 
 #contact {
