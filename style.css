@@ -2,6 +2,7 @@
     --yellow: #f9e7d6;
     --red: #f88867;
     --pink: #fbbcb2;
+    --lightBlue: #e5f4fb;
     --blue: #cce5f0;
     --dark: #343434;
 }
@@ -9,6 +10,7 @@
 html {
     box-sizing: border-box;
     color: var(--dark);
+    scroll-behavior: smooth;
 }
 *,
 *:before,
@@ -91,31 +93,168 @@ p {
 #nav {
     background-color: black;
     color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    padding: 0rem 10rem;
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#nav a {
+    text-decoration: none;
+    color: inherit;
+    padding: 0.8rem 1rem;
+    transition: background-color 200ms, color 200ms;
+}
+
+#nav a:hover {
+    background-color: white;
+    color: black;
+}
+
+#nav a:first-child {
+    margin-right: auto;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 100px;
+    transition: scale 200ms;
+    cursor: pointer;
+    box-shadow: 0px 2px 15px 5px rgba(96, 156, 180, 0.2);
+    text-decoration: none;
+}
+
+.btn:hover {
+    scale: 1.1;
+}
+
+.btn:focus {
+    outline: 2px solid green;
 }
 
 /* ------------- ACASA 📃 -------------- */
 
 #acasa {
     width: 100%;
-    min-height: 800px;
+    min-height: 90vh;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 10%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+    text-align: center;
+    flex-wrap: wrap;
+    padding-bottom: 10%;
 }
 
-.landing-left {
-    width: 50%;
+.cloud-container {
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blue);
+    overflow: hidden;
+}
+
+.hero-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-container p {
+    max-width: 600px;
+    font-size: 1.1rem;
+}
+
+#clouds {
+    width: 100%;
+    height: 60%;
+    background-image: url("/assets/clouds_bg.svg");
+    background-size: auto 100%;
+    position: absolute;
+    background-repeat: repeat-x;
+    background-position: 0% bottom;
+    left: 0;
+    bottom: -1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rainbow-container {
+    width: 60%;
+    position: absolute;
+    top: 20%;
+    overflow: hidden;
+    left: 20%;
+    display: flex;
+    justify-content: center;
+}
+.rainbow {
+    width: 93%;
+    max-width: 750px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.landing-right {
-    width: 50%;
+.red {
+    background-image: linear-gradient(to bottom, rgb(255, 110, 110), var(--blue), var(--blue));
+}
+
+.green {
+    background-image: linear-gradient(to bottom, rgb(145, 255, 145), var(--blue), var(--blue));
+}
+
+.purple {
+    background-image: linear-gradient(to bottom, rgb(225, 149, 255), var(--blue), var(--blue));
+}
+
+.yellow {
+    background-image: linear-gradient(to bottom, rgb(255, 255, 125), var(--blue), var(--blue));
+}
+
+.blue {
+    background-image: linear-gradient(to bottom, rgb(146, 146, 255), var(--blue), var(--blue));
+}
+
+.orange {
+    background-image: linear-gradient(to bottom, rgb(255, 201, 100), var(--blue), var(--blue));
+}
+
+.finish {
+    background-color: var(--blue);
 }
 
 /* ------------- SERVICII 📃 -------------- */
+
+@keyframes mvBg {
+    50% {
+        background-position: left top;
+    }
+}
 
 #servicii {
     width: 100%;
@@ -124,14 +263,28 @@ p {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--blue);
-    background-image: url("/assets/clouds.svg");
-    background-size: 150%;
     position: relative;
+    background-image: url("/assets/clouds.svg"),
+        linear-gradient(to bottom, white, var(--lightBlue), var(--blue), var(--blue));
+    background-size: 160%;
+    background-position: right top;
+    animation: mvBg 60s infinite;
+}
+
+#servicii::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5%;
+    background-color: var(--yellow);
+    border-radius: 0% 90% 0% 0%;
+    box-shadow: 0px -15px 35px 5px rgba(38, 60, 111, 0.1);
 }
 
 .services-desc {
-    width: 40%;
+    width: 50%;
     padding-right: 10%;
     display: flex;
     flex-direction: column;
@@ -149,10 +302,11 @@ p {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
 }
 
 .services-card-container {
-    width: 60%;
+    width: 50%;
 }
 
 .service-card {
@@ -162,11 +316,14 @@ p {
     box-shadow: 15px 15px 35px 5px rgba(38, 60, 111, 0.2);
     margin-bottom: 2rem;
     background-color: white;
-    border: 1px solid;
-    border-top: 2px solid white;
-    border-right: 2px solid var(--yellow);
-    border-bottom: 2px solid white;
-    border-left: var(--yellow);
+    border-top: 0px solid white;
+    border-right: 8px solid var(--blue);
+    border-bottom: 8px solid var(--blue);
+    border-left: 0px solid white;
+    transition: right 500ms, opacity 300ms;
+    position: relative;
+    opacity: 0;
+    z-index: 20;
 }
 
 @media (max-width: 900px) {
@@ -175,6 +332,10 @@ p {
     }
     .services-card-container {
         width: 100%;
+    }
+
+    .service-card {
+        opacity: 1;
     }
 }
 
@@ -190,6 +351,7 @@ p {
     justify-content: center;
     align-items: center;
     background-size: cover;
+    background-position: top;
 }
 
 #t-cont {
