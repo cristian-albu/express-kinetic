@@ -44,6 +44,10 @@
                         fiecare micuț în călătoria sa unică către dezvoltarea fizică și emoțională.
                     </p>
                     <a class="btn" href="#contact">Hai să vorbim</a>
+                    <div class="social-media-links">
+                        <a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com">Facebook</a>
+                        <a rel="noopener noreferrer" target="_blank" href="https://www.instagram.com">Instagram</a>
+                    </div>
                 </div>
             </section>
             <section id="servicii">
@@ -138,41 +142,65 @@
                 </div>
             </section>
             <section id="contact">
-                <h2>Contact</h2>
-                <div>
-                    <h3>Contact info</h3>
-                    <p>Text</p>
-                    <p>Email</p>
-                    <p>Phone</p>
-                </div>
-                <div>
-                    <form action="">
+                <div class="container">
+                    <div class="contact-info">
+                        <h2>Ne dorim să fim alături de voi!</h2>
+                        <p>
+                            Dacă aveți întrebări, sau doriți să stabiliți o întâlnire nu ezitați să ne contactați. Suntem
+                            gata să fim alături de dumneavoastră și de copilul dumneavoastră pentru a vă oferi sprijinul
+                            necesar.
+                        </p>
+                        <p>Așa că, hai să ne jucăm și să ne simțim mai bine împreună!</p>
+                        <p>
+                            Adresa:
+                            <a rel="noopener noreferrer" target="_blank" href="https://maps.app.goo.gl/gtcYQG9j52rZAaST7"
+                                ><b>Iași, Bulevardul Nicolae Iorga nr. 31</b></a
+                            >
+                        </p>
+                        <p>
+                            Email: <a href="mailto:expresskinetic@gmail.com"><b>expresskinetic@gmail.com</b></a>
+                        </p>
+                        <p>
+                            Telefon: <a href="tel:40784631985"><b>+40 784 631 985</b></a>
+                        </p>
+                    </div>
+
+                    <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+                        <input type="hidden" name="access_key" />
+                        <input type="hidden" name="redirect" value="http://localhost:5500/multumim.html" />
                         <label>
-                            <p>Nume</p>
-                            <input type="text" />
+                            <p>Nume*</p>
+                            <input type="text" name="nume" />
                         </label>
                         <label>
-                            <p>Email</p>
-                            <input type="text" />
+                            <p>Email*</p>
+                            <input type="email" name="email" />
                         </label>
                         <label>
-                            <p>Telefon</p>
-                            <input type="text" />
+                            <p>Telefon*</p>
+                            <input type="number" name="phone" />
                         </label>
                         <label>
                             <p>Mesaj</p>
-                            <textarea></textarea>
+                            <textarea name="message"></textarea>
                         </label>
-                        <label>
-                            <input type="checkbox" />
-                            <p>Text</p>
+                        <label class="cCheckbox">
+                            <input type="checkbox" name="privacy" />
+                            <p>Sunt de acord cu procesarea datelor personale*</p>
                         </label>
-                        <button>Trimite</button>
+                        <button id="contactBtn" disabled class="btn">Trimite</button>
                     </form>
+                </div>
+                <div class="hills" id="hill1"></div>
+                <div class="hills" id="hill2"></div>
+                <div class="hills" id="hill3">
+                    <div class="tree"></div>
+                    <div class="tree"></div>
                 </div>
             </section>
         </main>
         <script src="/js/services.js"></script>
         <script src="/js/slider.js"></script>
+        <script src="/js/contact.js"></script>
     </body>
 </html>
